@@ -232,7 +232,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.control_widget.set_frame_max(self.glWidget.bvh_animation.num_of_frame - 1)
         
         interval = 1000 * self.glWidget.bvh_animation.frame_interval
-        self.setWindowTitle('BVH Viewer [{:s}] fps:{:.1f}'.format(file, 1000 / interval) )
+        self.setWindowTitle('BVH Viewer [{:s}] fps:{:.1f}'.format(self.glWidget.bvh_animation.name, 1000 / interval) )
         self.glWidget.set_frame(0)
         print("interval set to ", interval)
         
