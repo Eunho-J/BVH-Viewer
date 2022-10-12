@@ -161,13 +161,13 @@ class GLWidget(QtOpenGL.QGLWidget):
         elif a0.key() == QtCore.Qt.Key_1:
             self.cam.view_target_at(0, 0, self.default_target)
         elif a0.key() == QtCore.Qt.Key_3:
-            self.cam.view_target_at(0, np.radians(-90), self.default_target)
+            self.cam.view_target_at(0, np.radians(90), self.default_target)
         elif a0.key() == QtCore.Qt.Key_5 and self.bvh_animation != None:
             self.cam.set_target(self.bvh_animation.skeleton.get_location_of_root(self.index_of_frame))
         elif a0.key() == QtCore.Qt.Key_7:
-            self.cam.view_target_at(np.radians(90), 0, self.default_target)
-        elif a0.key() == QtCore.Qt.Key_9:
             self.cam.view_target_at(np.radians(-90), 0, self.default_target)
+        elif a0.key() == QtCore.Qt.Key_9:
+            self.cam.view_target_at(np.radians(90), 0, self.default_target)
         elif a0.key() == QtCore.Qt.Key_0:
             self.cam.view_target_at(np.radians(-30), np.radians(45), self.default_target)
         elif a0.key() == QtCore.Qt.Key_Space:
