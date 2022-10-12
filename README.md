@@ -26,3 +26,8 @@ Key mapping
   - 0: set view direction angle from zx plane as 30 degree, and from zy plane as 45 degree.
   - SPACE: play/pause animation.
   - ESC: stop animation.
+
+## Running Examples
+
+![default](readme_files/img/bvh_viewer_default.png)
+![playing](readme_files/img/bvh_viewer_playing.png)
