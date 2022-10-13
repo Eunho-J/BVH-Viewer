@@ -1,6 +1,10 @@
+import pytest
+import sys
+sys.path.append('/home/nogabi/Workspace/capstone/bvhViewer')
+
 from bvhModel import *
 from bvhRenderer import render_animation
-import sys
+
 
 from window.windowManager import *
 
@@ -123,34 +127,72 @@ def test_parse_hierarchy():
     }          
     ''')
 
+    result = ""
     for idx, joint in enumerate(skel.joints):
-        print(idx, "=", joint.index, ": ", joint.name, "\n    P: ", joint.parent_index)
+        # print(idx, "=", joint.index, ": ", joint.name, "\n    P: ", joint.parent_index)
+        result += "\n{:d} = {:d} :  {:s} \n    P:  {:d}".format(idx, joint.index, joint.name, joint.parent_index)
+    
+    compare = '''
+0 = 0 :  Hips 
+    P:  0
+1 = 1 :  Chest 
+    P:  0
+2 = 2 :  Neck 
+    P:  1
+3 = 3 :  Head 
+    P:  2
+4 = 4 :  Head_Site 
+    P:  3
+5 = 5 :  LeftCollar 
+    P:  1
+6 = 6 :  LeftUpArm 
+    P:  5
+7 = 7 :  LeftLowArm 
+    P:  6
+8 = 8 :  LeftHand 
+    P:  7
+9 = 9 :  LeftHand_Site 
+    P:  8
+10 = 10 :  RightCollar 
+    P:  1
+11 = 11 :  RightUpArm 
+    P:  10
+12 = 12 :  RightLowArm 
+    P:  11
+13 = 13 :  RightHand 
+    P:  12
+14 = 14 :  RightHand_Site 
+    P:  13
+15 = 15 :  LeftUpLeg 
+    P:  0
+16 = 16 :  LeftLowLeg 
+    P:  15
+17 = 17 :  LeftFoot 
+    P:  16
+18 = 18 :  LeftFoot_Site 
+    P:  17
+19 = 19 :  RightUpLeg 
+    P:  0
+20 = 20 :  RightLowLeg 
+    P:  19
+21 = 21 :  RightFoot 
+    P:  20
+22 = 22 :  RightFoot_Site 
+    P:  21'''        
+    assert compare == result
+
+
+def test_file_load():
+    animation = BvhAnimation("/home/nogabi/Workspace/capstone/bvhViewer/tests/test_bvh.bvh")
+    
+    assert animation.name == "test_bvh"
+    assert animation.skeleton.name == "test_bvh"
+    compare_joints = ["Hips", "Chest", "Neck", "Head", "Head_Site", 
+                      "LeftCollar", "LeftUpArm", "LeftLowArm", "LeftHand", "LeftHand_Site",
+                      "RightCollar", "RightUpArm", "RightLowArm", "RightHand", "RightHand_Site",
+                      "LeftUpLeg", "LeftLowLeg", "LeftFoot", "LeftFoot_Site",
+                      "RightUpLeg", "RightLowLeg", "RightFoot", "RightFoot_Site" ]
+    for idx, joint in enumerate(animation.skeleton.joints):
+        assert joint.name == compare_joints[idx]
         
-def test_name_split():
-    file = "/home/nogabi/Workspace/capstone/bvhViewer/tests/test_bvh.bvh"
-    anim = BvhAnimation(file)
-    print(anim.name, " ", anim.skeleton.name)
-    for joints in anim.skeleton.joints:
-        print(joints.channels)
-        for idx, move_info in enumerate(joints.movement_infos):
-            print("{:d} ".format(idx), move_info.movement_per_channel)
     
-def test_name_split():
-    file = "/home/nogabi/Workspace/capstone/bvhViewer/tests/test_bvh.bvh"
-    anim = BvhAnimation(file)
-
-
-def main():
-    app = QtWidgets.QApplication(sys.argv)
-    win = MainWindow()
-    
-    file = "/home/nogabi/Workspace/capstone/bvhViewer/tests/bvh_files/sample-spin.bvh"
-    anim = BvhAnimation(file)
-    
-    win.glWidget.set_bvh_animation(anim)
-    
-    win.show()
-    sys.exit(app.exec_())
-
-if __name__ == '__main__':
-    main()

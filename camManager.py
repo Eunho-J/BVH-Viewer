@@ -26,7 +26,7 @@ class Camera:
         
         self.zoom = 3.0
         self.is_ortho = False
-        self.target = np.array([0., 0., 0.], dtype=np.float32)
+        self.target = np.array([0., 0., 0.], dtype=np.float64)
         
     def lookAt(self):
         glViewport(0, 0, self.viewport_width, self.viewport_height)
